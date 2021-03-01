@@ -3,12 +3,11 @@ from pyspark import SparkContext
 sc =SparkContext()
 print(sc)
 
-sc.textFile("airlines.csv")
+airline = sc.textFile("airlines.csv")
 print(sc)
 
-frst = sc.textFile("airlines.csv").first()
-print(frst)
+airline = airline.filter(lambda a: 'Description' not in a)
+print(airline.first())
 
-clct = sc.textFile("airlines.csv").collect()
-for item in clct:    
-    print(item)
+a = airline.map(lambda d: d.split(","))
+print(a.take(10))
